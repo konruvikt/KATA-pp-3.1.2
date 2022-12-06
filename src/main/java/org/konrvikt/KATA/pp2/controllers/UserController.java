@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
-
 @Controller
 public class UserController {
 
@@ -24,8 +21,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String findAll(Model model){
-        List<User> users = userService.findAll();
-        model.addAttribute("users", users);
+        model.addAttribute("users", userService.findAll());
         return "user-list";
     }
 
@@ -48,13 +44,12 @@ public class UserController {
 
     @GetMapping("/user-update/{id}")
     public String updateUserForm(@PathVariable("id") Long id, Model model){
-        User user = userService.findById(id);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.findById(id));
         return "user-update";
     }
 
     @PostMapping("/user-update")
-    public String updateUser(User user){
+    public String updateUser(@ModelAttribute("user") User user){
         userService.saveUser(user);
         return "redirect:/users";
     }
